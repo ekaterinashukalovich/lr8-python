@@ -44,7 +44,6 @@ class MyHandler(BaseHTTPRequestHandler):
 
     
 
-        # меню на всех страницах
         menu = [
             {"caption": "Главная", "href": "/"},
             {"caption": "Пользователи", "href": "/users"},
@@ -76,14 +75,14 @@ class MyHandler(BaseHTTPRequestHandler):
         # ---------------- Страница пользователя ----------------
         if path == "/user":
 
-    # 1. Проверяем id в URL
+    # ID
             if "id" not in args:
                 self.show("error.html", message="Не указан id пользователя")
                 return
 
             user_id = int(args["id"][0])
 
-    # 2. Ищем пользователя
+    # Поиск пользователя
             current_user = None
             for u in users:
                 if u.id == user_id:
@@ -93,13 +92,13 @@ class MyHandler(BaseHTTPRequestHandler):
                 self.show("error.html", message="Пользователь не найден")
                 return
 
-    # 3. Загружаем текущие курсы
+    # Текущие курсы
             try:
                 all_curr = get_currencies()
             except:
                 all_curr = {}
 
-    # 4. Формируем список валют пользователя
+    # Список валют пользователя
             user_currs = []
             for sub in subscriptions:
                 if sub.user_id == user_id:
@@ -107,15 +106,7 @@ class MyHandler(BaseHTTPRequestHandler):
                     if cid in all_curr:
                         user_currs.append(all_curr[cid])
 
-    # 5. Для графика текущих значений
-            labels = ["Текущее значение"]
-            datasets = []
-
-            for curr in user_currs:
-                val = curr["value"]       # float, replace() НЕ нужно
-                datasets.append([val])
-
-    # 6. История валют за 3 месяца
+    # История валют за 3 месяца
             history_by_currency = {}
 
             for curr in user_currs:
@@ -126,7 +117,7 @@ class MyHandler(BaseHTTPRequestHandler):
                     "history": hist
                 }
 
-    # 7. Рендер страницы
+    # Рендер страницы
             self.show(
                 "user.html",
                 navigation=menu,
@@ -151,11 +142,11 @@ class MyHandler(BaseHTTPRequestHandler):
             self.show("currencies.html", navigation=menu, currencies=curr_list)
             return
 
-        # ---------------- Неизвестный путь ----------------
+        # ---------------- Ошибка ----------------
         self.show("error.html", message="Страница не найдена")
 
 
-# запуск сервера
+
 if __name__ == '__main__':
     print("server is running on http://localhost:8080")
     httpd = HTTPServer(('localhost', 8080), MyHandler)
