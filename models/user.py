@@ -3,7 +3,7 @@ class User:
         self.id = user_id
         self.name = name
 
-    # ---- id ----
+    # ---- ID ----
     @property
     def id(self):
         return self.__id
@@ -15,7 +15,7 @@ class User:
         else:
             raise ValueError("ID пользователя должен быть положительным целым числом")
 
-    # ---- name ----
+    # ---- Имя ----
     @property
     def name(self):
         return self.__name
