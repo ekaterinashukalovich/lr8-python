@@ -1,15 +1,11 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 from jinja2 import Environment, FileSystemLoader
-
-# модели
 from models import Author, User, UserCurrency
 from utils.currencies_api import get_currencies, get_currency_history
 
-# подключаем папку templates
 env = Environment(loader=FileSystemLoader("templates"))
 
-# простые данные
 author = Author("Ekaterina Shukalovich", "P3121")
 
 users = [
