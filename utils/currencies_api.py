@@ -29,7 +29,6 @@ def get_currencies():
                 nominal=int(valute.find("Nominal").text),
             )
 
-            # ключом делаем ID из XML (R01235, R01239 и т. д.)
             currencies[valute.attrib["ID"]] = {
                 "id": curr.currency_id,
                 "num_code": curr.num_code,
@@ -53,7 +52,7 @@ def get_currency_history(currency_id, months=3):
     # Дата окончания — сегодня
     end = datetime.date.today()
 
-    # Дата начала — N месяцев назад
+    # Дата начала — 3 месяца назад
     start = end - datetime.timedelta(days=30 * months)
 
     url = (
@@ -79,7 +78,7 @@ def get_currency_history(currency_id, months=3):
         value_str = record.find("Value").text
         nominal = int(record.find("Nominal").text)
 
-        # Приводим дату к ISO
+        # Приводим дату к читабельному формату
         d = datetime.datetime.strptime(date_str, "%d.%m.%Y").date()
         v = float(value_str.replace(",", "."))
 
