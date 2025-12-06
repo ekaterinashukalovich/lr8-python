@@ -4,7 +4,7 @@ class App:
         self.version = version
         self.author = author
 
-    # ---- name ----
+    # ---- Имя ----
     @property
     def name(self):
         return self.__name
@@ -16,7 +16,7 @@ class App:
         else:
             raise ValueError("Название приложения должно содержать больше 2 символов")
 
-    # ---- version ----
+    # ---- Версия ----
     @property
     def version(self):
         return self.__version
@@ -28,7 +28,7 @@ class App:
         else:
             raise ValueError("Версия приложения должна быть непустой строкой")
 
-    # ---- author ----
+    # ---- Автор ----
     @property
     def author(self):
         return self.__author
